@@ -1,0 +1,62 @@
+{
+  "name": "@sekmet/near-reacthooks",
+  "version": "0.1.61",
+  "main": "build/index.js",
+  "module": "esm/index.js",
+  "files": [
+    "build",
+    "esm"
+  ],
+  "scripts": {
+    "prebuild": "typedoc --tsconfig ./ts-config.json",
+    "build": "rollup -c",
+    "pretest": "ts-standard",
+    "test": "jest",
+    "test:watch": "yarn run test --watch",
+    "prepublish": "yarn run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },  
+  "repository": "https://github.com/sekmet/near-reacthooks.git",
+  "author": "Carlos Guimaraes",  
+  "license": "MIT",
+  "dependencies": {
+    "bn.js": "^5.2.0",
+    "near-api-js": "^0.44.2"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.1.3",
+    "@types/jest": "^27.4.0",
+    "@types/react": "^17.0.39",
+    "eslint": "^8.9.0",
+    "eslint-config-standard-with-typescript": "^21.0.1",
+    "jest": "^27.5.1",
+    "rollup": "^2.68.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.31.2",
+    "ts-standard": "^11.0.0",
+    "tslib": "^2.3.1",
+    "typedoc": "^0.22.12",
+    "typescript": "^4.5.5"
+  },
+  "ts-standard": {
+    "project": "./ts-config.json",
+    "ignore": [
+      "build",
+      "docs",
+      "node_modules",
+      "src/**/*.test.js"
+    ]
+  },
+  "_id": "near-reacthooks@0.1.0"
+}
