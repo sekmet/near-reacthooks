@@ -1,12 +1,12 @@
 import type { Near, WalletConnection, Contract } from 'near-api-js'
-declare let window: any;
+declare let window: any
 
 // Optional config, can be passed in before plugin install:
 // {
 //   appTitle: '',
 //   contractName: '',
 // }
-export function getConfig (env, options:any = {}) {
+export function getConfig (env, options: any = {}) {
   const config = {
     ...options,
     appTitle: options.appTitle || 'NEAR',
@@ -86,58 +86,56 @@ function unicodeStringToTypedArray (s) {
 }
 
 export class ReactNear {
-    nearApi?: any;
-    config?: any;
-    near?: Near;
-    keystore?: any;
-    walletConnection?: WalletConnection;
-    user?: any;
+  nearApi?: any
+  config?: any
+  near?: Near
+  keystore?: any
+  walletConnection?: WalletConnection
+  user?: any
 
   constructor (env, config) {
     // loading via CDN, requires adding this line to index.html:
     // <script src="https://cdn.jsdelivr.net/gh/nearprotocol/near-api-js/dist/near-api-js.js" ></script>
-    if (typeof window !== 'undefined') {       
-        this.nearApi = { ...window.nearApi }
-        this.config = getConfig(env, config)
-        this.near = {} as Near
-        this.keystore = null
-        this.walletConnection = {} as WalletConnection
-        this.user = null
-        return this
+    if (typeof window !== 'undefined') {
+      this.nearApi = { ...window.nearApi }
+      this.config = getConfig(env, config)
+      this.near = {} as Near
+      this.keystore = null
+      this.walletConnection = {} as WalletConnection
+      this.user = null
+      return this
     } else {
-        return;
+
     }
   }
 
   async loadNearProvider (): Promise<any> {
     try {
-        this.keystore = new this.nearApi.keyStores.BrowserLocalStorageKeyStore(window.localStorage, 'nearlib:keystore:')
-        this.near = await this.nearApi.connect(Object.assign({ deps: { keyStore: this.keystore } }, this.config))
-        return this        
+      this.keystore = new this.nearApi.keyStores.BrowserLocalStorageKeyStore(window.localStorage, 'nearlib:keystore:')
+      this.near = await this.nearApi.connect(Object.assign({ deps: { keyStore: this.keystore } }, this.config))
+      return this
     } catch (error) {
-        console.log(error)
-        return false
-    }  
-
+      console.log(error)
+      return false
+    }
   }
 
   async loadAccount (): Promise<any> {
     try {
-        // Needed to access wallet
-        this.walletConnection = new this.nearApi.WalletConnection(this.near)
-        this.user = new this.nearApi.WalletAccount(this.near)
+      // Needed to access wallet
+      this.walletConnection = new this.nearApi.WalletConnection(this.near)
+      this.user = new this.nearApi.WalletAccount(this.near)
 
-        if (this.walletConnection && this.walletConnection.getAccountId()) {
+      if ((this.walletConnection != null) && this.walletConnection.getAccountId()) {
         this.user.accountId = this.walletConnection.getAccountId()
         this.user.balance = (await this.walletConnection.account().state()).amount
-        }
+      }
 
-        return this.user      
+      return this.user
     } catch (error) {
-        console.log(error)
-        return false        
-    }  
-
+      console.log(error)
+      return false
+    }
   }
 
   async loginAccount (): Promise<any> {
@@ -157,7 +155,7 @@ export class ReactNear {
   }
 
   async getContract (contract_id, abiMethods): Promise<Contract|undefined> {
-    if (!this.user || !this.user.accountId || !this.walletConnection) return
+    if (!this.user || !this.user.accountId || (this.walletConnection == null)) return
     const account = this.walletConnection.account()
     const abi = {
       changeMethods: [],

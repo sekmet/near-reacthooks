@@ -1,6 +1,6 @@
 {
   "name": "@sekmet/near-reacthooks",
-  "version": "0.1.61",
+  "version": "0.1.64",
   "main": "build/index.js",
   "module": "esm/index.js",
   "files": [

@@ -23,7 +23,7 @@ export const useNearWallet = (): any => {
  */
 export const useNearFormatUtils = (): any => {
   const formatUtils = {
-    parseNearAmount, 
+    parseNearAmount,
     formatNearAmount
   }
 

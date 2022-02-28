@@ -8,7 +8,7 @@ import type { Near, WalletConnection } from 'near-api-js'
 /**
  * @ignore
  */
-declare let window: any;
+declare let window: any
 
 /**
  * @ignore
@@ -44,12 +44,12 @@ export type NearProviderProps = ConnectConfig & {
  * </NearProvider>
  * ```
  */
-export const NearProvider: FC<NearProviderProps> = ({ environment = NearEnvironment.TestNet, children, networkId = '', nodeUrl = '', headers, ...props }) => {
+export const NearProvider: FC<NearProviderProps> = ({ environment = NearEnvironment.TestNet, children, ...props }) => {
   const config: ConnectConfig = {
     ...getConfig(environment),
     // deps: { keyStore: new near.nearApi.keyStores.BrowserLocalStorageKeyStore() },
     ...props
-  }  
+  }
 
   const [near, setNear] = useState<Near>()
   const [wallet, setWallet] = useState<WalletConnection>()
@@ -58,9 +58,8 @@ export const NearProvider: FC<NearProviderProps> = ({ environment = NearEnvironm
   const [user, setUser] = useState<any>()
 
   useEffect(() => {
-    async function setup () {    
-
-      const timeoutId = setTimeout( async () => {
+    async function setup () {
+      const timeoutId = setTimeout(async () => {
         const _near = await new ReactNear(environment, config)
 
         await _near.loadNearProvider().then((provider) => {
@@ -78,12 +77,11 @@ export const NearProvider: FC<NearProviderProps> = ({ environment = NearEnvironm
 
       return () => clearTimeout(timeoutId)
     }
-    
-    setup()
-    .catch(err => {
-        console.error(err)
-    })
 
+    setup()
+      .catch(err => {
+        console.error(err)
+      })
   }, [])
 
   return (

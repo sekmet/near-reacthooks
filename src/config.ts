@@ -12,10 +12,15 @@ export function getConfig (env: NearEnvironment, options: any = {}): ConnectConf
     appTitle: options.appTitle || 'NEAR',
     contractName: options.contractName || 'test.near'
   }
+
+  const nearHeaders:any = {}
+  //nearHeaders['x-api-key'] = RPC_API_KEY
+  nearHeaders['Content-Type'] = 'application/json'
+
   switch (env) {
     case NearEnvironment.MainNet:
       return {
-        headers: {},
+        headers: { nearHeaders },
         networkId: 'mainnet',
         nodeUrl: 'https://rpc.mainnet.near.org',
         walletUrl: 'https://wallet.near.org',
@@ -23,7 +28,7 @@ export function getConfig (env: NearEnvironment, options: any = {}): ConnectConf
       }
     case NearEnvironment.BetaNet:
       return {
-        headers: {},
+        headers: { nearHeaders },
         networkId: 'betanet',
         nodeUrl: 'https://rpc.betanet.near.org',
         walletUrl: 'https://wallet.betanet.near.org',
@@ -31,23 +36,23 @@ export function getConfig (env: NearEnvironment, options: any = {}): ConnectConf
       }
     case NearEnvironment.Test:
       return {
-        headers: {},
+        headers: { nearHeaders },
         networkId: 'shared-test',
         nodeUrl: 'https://rpc.ci-testnet.near.org',
         masterAccount: 'test.near'
       }
     case NearEnvironment.Local:
       return {
-        headers: {},
+        headers: { nearHeaders },
         networkId: 'local',
         nodeUrl: 'http://localhost:3030',
         keyPath: `${process.env.HOME}/.near/validator_key.json`,
         walletUrl: 'http://localhost:4000/wallet'
-      }      
+      }
     case NearEnvironment.TestNet:
     default:
       return {
-        headers: {},
+        headers: { nearHeaders },
         networkId: 'testnet',
         nodeUrl: 'https://rpc.testnet.near.org',
         walletUrl: 'https://wallet.testnet.near.org',

@@ -8,7 +8,7 @@
  * This enum is used to automatically configure the {@link NearProvider}
  * to connect to either `MainNet`, `TestNet`, or `BetaNet`.
  */
- 
+
 export enum NearEnvironment {
   MainNet = 'mainnet',
   TestNet = 'testnet',
