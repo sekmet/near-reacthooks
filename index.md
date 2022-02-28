@@ -1,37 +1,86 @@
-## Welcome to GitHub Pages
+# NEAR React Hooks v0.1.x
 
-You can use the [editor on GitHub](https://github.com/sekmet/near-reacthooks/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Use react hooks to configure and interact with NEAR.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+[Reference Docs](https://sekmet.github.io/near-reacthooks)
 
-### Markdown
+## Setup
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Reference near-api-js in the browser, include it via CDN or add it to your asset pipeline as you would any other JavaScript library:
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```html
+<script src="https://cdn.jsdelivr.net/gh/nearprotocol/near-api-js/dist/near-api-js.js"></script>
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+Install the package from npm `npm i @sekmet/near-reacthooks` or `yarn add @sekmet/near-reacthooks`.
 
-### Jekyll Themes
+Then wrap your application with the `NearProvider` passing it an environment:
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/sekmet/near-reacthooks/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+* `mainnet`
+* `testnet`
+* `betanet`
+* `local`
 
-### Support or Contact
+```js
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { NearProvider, NearEnvironment } from '@sekmet/near-reacthooks'
+import App from './App'
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+ReactDOM.render(
+  <NearProvider environment={NearEnvironment.TestNet}>
+    <App />
+  </NearProvider>,
+  document.querySelector('#root')
+)
+```
+
+### Using with Next.js + Typescript
+
+```ts
+import { NearProvider, NearEnvironment } from '@sekmet/near-reacthooks'
+import { AppProps } from 'next/app';
+import Script from 'next/script'
+
+const MyApp = ({ Component, pageProps }: AppProps) => {
+return (
+    <>
+    <Script id="near-api-js" src="https://cdn.jsdelivr.net/gh/nearprotocol/near-api-js/dist/near-api-js.js" />
+    <NearProvider environment={NearEnvironment.TestNet}>
+        <Component {...pageProps} />
+    </NearProvider>
+    </>
+);
+}
+
+export default MyApp;
+```
+
+You can more finely tune the NEAR configuration by passing additional props
+no the `NearProvider`. See the docs for more information.
+
+Once the application is wrapped with the `NearProvider` your can access the
+NEAR connection, the NEAR wallet, and NEAR contract using react hooks from
+any component in the application.
+
+```js
+import React, { useEffect } from 'react'
+import { useNear, useNearWallet, useNearContract } from '@sekmet/near-reacthooks';
+
+export default function App() {
+  const near = useNear()
+  const wallet = useNearWallet()
+  const contract = useNearContract('dev-123457824879', {
+    viewMethods: ['getCount'],
+    changeMethods: ['decrement', 'increment']
+  })
+
+  useEffect(() => {
+    if(!wallet.isSignedIn()) wallet.requestSignIn();
+  }, []);
+
+  if(!wallet.isSignedIn()) return null;
+  
+  return <h1>{wallet.getAccountId()}</h1>;
+}
+```
