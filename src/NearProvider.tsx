@@ -31,6 +31,7 @@ export type NearProviderProps = ConnectConfig & {
   networkId?: string
   nodeUrl?: string
   headers?: string[]
+  children?: any[]
 }
 
 /**

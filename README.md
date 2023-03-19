@@ -1,3 +1,5 @@
+![NEAR React Hooks v0.1.x](docs/assets/near_logo.svg "Near React Hooks v0.1.x")
+
 # NEAR React Hooks v0.1.x
 
 Use react hooks to configure and interact with NEAR.

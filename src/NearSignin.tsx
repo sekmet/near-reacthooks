@@ -52,7 +52,7 @@ const DEFAULT_STYLE = {
  * `NearSignin` renders a button used to signin to a NEAR account.
  */
 export const NearSignin: React.FC<NearSigninProps> = ({
-  text = 'SignIn with NEAR',
+  text = 'Sign In with NEAR',
   className,
   style,
   ...rest

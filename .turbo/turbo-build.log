@@ -1,0 +1,8 @@
+
+> near-reacthooks@0.1.0 build /home/sekmet/DEVELOPMENT/QSTN/ALPHA/qstn-frontend-v01/packages/near-hooks
+> rollup -c
+
+[36m
+[1msrc/index.ts[22m → [1mbuild/index.js[22m...[39m
+[1m[33m(!) Plugin node-resolve: preferring built-in module 'buffer' over local alternative at '/home/sekmet/DEVELOPMENT/QSTN/ALPHA/qstn-frontend-v01/node_modules/.pnpm/buffer@5.7.1/node_modules/buffer/index.js', pass 'preferBuiltins: false' to disable this behavior or 'preferBuiltins: true' to disable this warning[39m[22m
+[32mcreated [1mbuild/index.js[22m in [1m2.6s[22m[39m
